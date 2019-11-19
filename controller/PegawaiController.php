@@ -6,7 +6,7 @@ include('../connection/connection.php');
 
 // Function FOR EDIT PEGAWAI
 
-if(isset($_POST['save'])){
+if(isset($_POST['save']) && !empty($_POST["nip"]) && !empty($_POST["nama"]) && !empty($_POST["alamat"] && !empty($_POST["tanggal_diterima"]) )){
 
   $nip = mysqli_real_escape_string($koneksi,$_POST['nip']);
   $nama = mysqli_real_escape_string($koneksi,$_POST['nama']);
@@ -19,13 +19,12 @@ if(isset($_POST['save'])){
     $input = mysqli_query($koneksi, "INSERT INTO pegawai VALUES(NULL, '$nip', '$nama', '$alamat', '$tgl_diterima')");
     
 	if($input){
-    
-	    echo 'Data berhasil di tambahkan!';    //Pesan jika proses tambah sukses
-	    echo '<a href="../index.php">Kembali</a>';  //membuat Link untuk kembali ke halaman tambah
+    	echo "Berhasil Disimpan";
+	    header("Refresh:1; url= ../index.php");
     
 	}else{
 		echo 'Gagal menambahkan data! ';    //Pesan jika proses tambah gagal
-		echo '<a href="../index.php?page=views/homes/create">Kembali</a>';  //membuat Link untuk kembali ke halaman tambah
+		header("Refresh:1; url= ../index.php?page=views/homes/create");
   	}
 
 }else if(isset($_POST['edit-perusahaan'])){
@@ -41,14 +40,13 @@ if(isset($_POST['save'])){
 
 	//jika query update sukses
 	if($update){
-		
-		echo 'Data berhasil di simpan! ';
-		echo '<a href="../index.php">Kembali</a>';
+		echo "Berhasil Diubah";
+		header("Refresh:1; url= ../index.php");
 		
 	}else{
 		
 		echo 'Gagal menyimpan data!';
-		echo '<a href="../index.php?page=views/homes/edit&get_id='.$id.'">Kembali</a>';	//membuat Link untuk kembali ke halaman edit
+		header("Refresh:1; url= ../index.php?page=views/homes/edit&get_id='.$id.'");
 		
 	}
 
@@ -69,15 +67,13 @@ if(isset($_POST['save'])){
 		$del = mysqli_query($koneksi, "DELETE FROM pegawai WHERE id='$id'");
 
 		if($del){
-
-			echo 'Data berhasil di hapus! ';
-			echo '<a href="../index.php">Kembali</a>';
+			echo "Berhasil Dihapus";
+			header("Refresh:1; url= ../index.php");
 			
 		}else{
 			
 			echo 'Gagal menghapus data! ';
-			echo '<a href="../index.php">Kembali</a>';
-		
+			header("Refresh:1; url= ../index.php");
 		}
 		
 	}

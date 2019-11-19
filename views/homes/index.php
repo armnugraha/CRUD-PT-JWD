@@ -34,18 +34,7 @@
             $page = 1;
         }
 
-        $no_of_records_per_page = 5;
-        $offset = ($page-1) * $no_of_records_per_page;
-
-        $total_pages_sql = "SELECT COUNT(*) FROM pegawai";
-
-        $result = mysqli_query($koneksi, $total_pages_sql);
-        $total_rows = mysqli_fetch_array($result)[0];
-        
-        $total_pages = ceil($total_rows / $no_of_records_per_page);
-
-        $sql ="SELECT * FROM pegawai WHERE nip LIKE '%".$get_value."%' OR nama LIKE '%".$get_value."%' LIMIT $offset, $no_of_records_per_page";
-
+        $sql ="SELECT * FROM pegawai WHERE nip LIKE '%".$get_value."%' OR nama LIKE '%".$get_value."%' ";
 
         //untuk menyeleksi data error
         $query =mysqli_query($koneksi,$sql);
@@ -86,27 +75,5 @@
     <?php } } ?>
         </tbody>
     </table>
-
-</div>
-
-    <?php
-        if ($cek != null && $total_rows >= $no_of_records_per_page) {
-        ?>
-            <ul class="pagination pagination-sm pull-right push-down-20">
-                <?php if($page <= 1){ 
-
-                    } else{
-                        echo '<li class=""><a href="index.php?page=views/homes/index&pages=1">First</a></li>';
-                    }
-                ?>
-                <li class="<?php if($page <= 1){ echo 'disabled'; } ?>">
-                    <a href="<?php if($page <= 1){ echo '#'; } else { echo "index.php?page=views/homes/index&pages=".($page - 1); } ?>">Prev</a>
-                </li>
-                <li class="<?php if($page >= $total_pages){ echo 'disabled'; } ?>">
-                    <a href="<?php if($page >= $total_pages){ echo '#'; } else { echo "index.php?page=views/homes/index&pages=".($page + 1); } ?>">Next</a>
-                </li>
-                <li><a href="index.php?page=views/homes/index&pages=<?php echo $total_pages; ?>">Last</a></li>
-            </ul>
-    <?php } ?>
 
 </div>
